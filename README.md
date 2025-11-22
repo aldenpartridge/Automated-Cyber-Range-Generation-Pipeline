@@ -1,400 +1,385 @@
----
 
-# **Automated Cyber Range Generation Pipeline**
+# 🚀 **Automated Cyber Range Generation Pipeline**
 
-## **Purpose**
+### *AI-Driven • Fully Containerized • Self-Hosted • King-of-the-Hill CTF Environment*
 
-This repository defines the **complete specification** for an automated, AI-driven pipeline that generates fully containerized, self-hosted cyber ranges for university-level Capture-the-Flag (CTF) competitions.
-
-Each CTF event features a **new fictional organization**, a fresh network topology, unique vulnerability pathways, realistic fictional employees, and a scoring engine. This system is fully **local**, ensuring that all penetration testing remains safe, legal, and isolated within an on-premises environment.
-
-This document is intended to be consumed by downstream LLM agents to design, implement, or generate components of the cyber range.
-
----
-
-# **System Overview**
-
-Three attacker teams compete in a king-of-the-hill style CTF. They scan, attack, pivot, and take control of hosts inside a fully containerized cyber range.
-
-A multi-agent AI pipeline automatically builds an entirely new cyber range, end-to-end:
-
-1. User describes a fictional organization
-2. Agents generate:
-
-   * The organization
-   * Its employees and credential ecosystem
-   * The network topology
-   * High-level vulnerabilities
-   * Dockerized systems
-   * Seeded data and internal documents
-   * A scoring engine
-   * Deployment infrastructure
-
-Each event results in a fresh, realistic, gameplay-ready CTF scenario.
+![Static Badge](https://img.shields.io/badge/CTF-Automation-blue)
+![Static Badge](https://img.shields.io/badge/Infrastructure-Docker-informational)
+![Static Badge](https://img.shields.io/badge/Logging-ELK%20Stack-orange)
+![Static Badge](https://img.shields.io/badge/Safe-Fictional%20Only-brightgreen)
+![Static Badge](https://img.shields.io/badge/AI-Multi--Agent-lightgrey)
+![Static Badge](https://img.shields.io/badge/Scoring-KOTH-yellow)
 
 ---
 
-# **Pipeline Workflow**
+# 📌 **Overview**
 
-Below is the complete cyber range generation workflow, including all required agents, artifacts, and outputs.
+This repository defines the **complete specification** for an AI-driven system that automatically generates a fully self-hosted cyber range for university-level Capture-the-Flag competitions.
+
+Every CTF event includes:
+
+* A freshly generated fictional organization
+* Unique employee roster, credentials, and digital identities
+* Full Docker-based network topology
+* Optional simulated mobile devices (fictional MFA)
+* High-level vulnerabilities and pivot paths
+* King-of-the-Hill (KOTH) scoring
+* Fully centralized logging
+* Complete scenario reproducibility
+* Safe & offline-only execution
+
+This README is written to be consumed by **downstream LLM agents** responsible for designing, building, or generating the cyber range.
 
 ---
 
-# **1. User Input — Scenario Requirements**
+# 🧭 **Table of Contents**
+
+* [Purpose](#-purpose)
+* [Terminology](#-terminology)
+* [Pipeline Workflow](#-pipeline-workflow)
+
+  * [1. User Input](#1-user-input--scenario-requirements)
+  * [2. Organization Builder](#2-fictional-organization-builder-agent)
+  * [3. Network Architect](#3-network-architect-agent)
+  * [4. Vulnerability & Challenge Designer](#4-vulnerability--challenge-designer-agent)
+  * [5. Image Builder](#5-container--image-builder-agent)
+  * [6. Data Seeder](#6-data--content-seeder-agent)
+  * [7. Compiler / Orchestrator](#7-cyber-range-compiler--orchestrator-agent)
+  * [8. Scoring Engine](#8-scoring-engine-generator-agent)
+  * [9. Logging Subsystem](#9-centralized-logging-subsystem)
+  * [10. Safety & Validation](#10-safety--validation-agent)
+  * [11. Deployment Coordinator](#11-deployment-coordinator-agent)
+  * [12. Admin Dashboard](#12-optional-admin-dashboard-generator)
+  * [13. Cleanup](#13-optional-post-event-cleanup-agent)
+* [Resource Constraints](#-resource-constraints)
+* [Directory Structure](#-directory-structure)
+* [Gameplay Summary](#-ctf-gameplay-summary)
+
+---
+
+# 🎯 **Purpose**
+
+This pipeline builds a **fully automatic CTF scenario** with:
+
+✔ A fictional organization
+✔ Docker-based cyber-range infrastructure
+✔ Per-host King-of-the-Hill scoring
+✔ Realistic seeded content
+✔ Optional mobile device challenges
+✔ Full, centralized logging for debrief review
+✔ Safe, high-level vulnerabilities only
+✔ No real-world exploitation techniques
+
+Everything runs **offline**, ensuring that all attacker activity happens inside a contained sandbox.
+
+---
+
+# 🧩 **Terminology**
+
+| Term                  | Meaning                                                    |
+| --------------------- | ---------------------------------------------------------- |
+| **Host / Device**     | Any containerized workstation, service, or simulated phone |
+| **Container**         | Docker container representing part of the org              |
+| **Control Token**     | Token proving team control over a host                     |
+| **Control Beacon**    | Small agent inside each host handling token state          |
+| **Mobile Device**     | Pseudo-phone container used for fictional MFA flows        |
+| **Logging Subsystem** | Centralized ELK / OpenSearch stack for monitoring          |
+| **KOTH**              | King-of-the-Hill scoring model                             |
+
+---
+
+# 🔧 **Pipeline Workflow**
+
+Each step is performed by a dedicated multi-agent AI component.
+Every agent produces artifacts consumed by downstream agents.
+
+---
+
+# 1️⃣ **User Input — Scenario Requirements**
 
 The pipeline begins with a description provided by the user:
 
-* Industry/theme of the organization
-* Size, complexity, and style
-* Optional constraints or story elements
-* Difficulty level
+* Organization theme & story flavor
+* Industry
+* Scale & complexity
+* Difficulty
+* Optional constraints
 
-This seed becomes the foundation for the entire cyber range.
+This becomes the seed for all subsequent generation.
 
 ---
 
-# **2. Fictional Organization Builder Agent**
+# 2️⃣ **Fictional Organization Builder Agent**
 
-**Input:** User scenario description
 **Outputs:**
 
 * `ORGANIZATION.md`
 * `EMPLOYEE_CREDENTIALS.json`
 
-This agent constructs a complete fictional organization.
+Generates a complete fictional organization:
 
-## **Contents of `ORGANIZATION.md`**
+### Organizational Components
 
-### **2.1 Organization Overview**
+* Overview & mission
+* Structure & departments
+* Staff directory
+* Background profiles
+* Business model
+* **Employee bounty system totaling 15,000 points**
 
-Description of company theme, purpose, industry, and internal culture.
+### Digital Identity Profiles (`EMPLOYEE_CREDENTIALS.json`)
 
-### **2.2 Size & Structure**
+For each employee:
 
-Organizational chart, departments, roles, personnel distribution.
-
-### **2.3 Staff Directory**
-
-Fictional employee roster including titles and reporting hierarchy.
-
-### **2.4 Employee Background Profiles**
-
-Safe, fully fictional personal biographies, hobbies, interests, and notes.
-
-### **2.5 Mission & Business Model**
-
-Strategic goals, services offered, operational focus, fictional revenue models.
-
-### **2.6 Employee Bounty System**
-
-Each employee receives a point value representing their importance, used for scoring.
-**Total bounty points across all employees must equal exactly 15,000.**
-
----
-
-## **2.7 Employee Digital Identity Profiles (NEW)**
-
-Output: `EMPLOYEE_CREDENTIALS.json`
-
-The Organization Builder must generate a detailed digital identity for every fictional employee, including:
-
-* Work usernames
-* Personal usernames
-* Work email addresses
-* Personal email addresses
-* Multiple work passwords (historical + current)
-* Multiple personal passwords
-* Password patterns derived from their biography (e.g., pets, hobbies)
-* Optional fictional MFA status
-* Account hints and common mistakes
+* Work usernames & emails
+* Personal usernames & emails
+* Multiple passwords (work/personal)
+* Password patterns tied to biography
 * Credential reuse tendencies
-* Weak or guessable passwords (for downstream challenge design)
+* Fictional MFA status
 
-**These credentials are NOT used directly as implants or vulnerabilities**
-— they are simply a realistic data corpus for downstream agents.
+### Credential Safety Requirements
+
+* Purely fictional
+* No real-world patterns
+* Supports high-level challenges only
 
 ---
 
-# **3. Network Architect Agent**
+# 3️⃣ **Network Architect Agent**
 
-**Input:** `ORGANIZATION.md`
 **Output:** `NETWORK_TOPOLOGY.md`
 
-This agent translates the fictional organization into a full network architecture.
+Defines:
 
-## **Contents of `NETWORK_TOPOLOGY.md`**
+* Full network topology
+* DMZ, LAN, restricted zones
+* Public & internal services
+* Authentication systems
+* Docker network layout
+* **Optional mobile device hosts**
+* Implementation-ready container mapping
 
-### **3.1 Complete Network Architecture**
-
-Network segments (DMZ, LAN, restricted zones), routing, segmentation.
-
-### **3.2 Forward-Facing Infrastructure**
-
-Exposed services such as:
-
-* Web portals
-* Email gateways
-* VPN entrypoints
-* Public APIs
-
-### **3.3 Internal Infrastructure**
-
-File servers, authentication servers, application servers, internal web portals, shared drives, etc.
-
-### **3.4 Open-Source, Local-Only Components**
-
-Every service must be:
-
-* Open-source
-* Self-hostable
-* Docker-compatible
-* Free to use
-
-### **3.5 Containerization Mapping**
-
-All hosts mapped to Docker images, including networking, volumes, and interdependencies.
-
-### **3.6 Implementation-Ready Structure**
-
-Downstream agents must be able to use this file to generate:
-
-* Dockerfiles
-* Compose files
-* Network definitions
-* Config files
+Everything must use open-source, local-only components.
 
 ---
 
-# **4. Vulnerability & Challenge Designer Agent**
-
-**Inputs:**
-
-* `ORGANIZATION.md`
-* `EMPLOYEE_CREDENTIALS.json`
-* `NETWORK_TOPOLOGY.md`
+# 4️⃣ **Vulnerability & Challenge Designer Agent**
 
 **Output:** `CHALLENGE_DESIGN.md`
 
-This agent defines the **intended challenge structure** for the CTF.
+Defines safe, high-level vulnerabilities and gameplay paths:
 
-## **Contents of `CHALLENGE_DESIGN.md`**
-
-### **4.1 High-Level Vulnerability Design**
-
-Defines the *concepts* of vulnerabilities, without exploit code.
-Examples:
+### High-Level Concepts Only
 
 * Weak credential policy
 * Password reuse
-* Misconfigured web service
-* Faulty access control
-* Internal information exposure
+* Log-based hints
+* Misconfigured ACLs
+* Insecure internal services
 
-### **4.2 Attack Path / Pivot Structure**
+### Attack Path / Kill Chain
 
-Defines how attackers move from:
-External → Foothold → Internal Discovery → Lateral Movement → HVTs
+* External → foothold → lateral movement → HVT capture
 
-### **4.3 Host-Specific Challenge Goals**
+### Credential & Host-Level Challenges
 
-Describes what “control” means for each device.
+* Which accounts are weak
+* Which credentials appear in documents
+* Which hosts require pivoting
+* Which hosts have high point values
 
-### **4.4 Difficulty Tiering**
+### Optional Mobile MFA Challenges
 
-Beginner → Intermediate → Advanced challenges.
-
----
-
-## **4.5 Credential-Based Challenge Definitions (NEW)**
-
-The agent determines how employee credentials *become relevant* as gameplay elements.
-
-It must select:
-
-* Which work credentials are intentionally weak
-* Which passwords are reused across services
-* Which accounts should be brute-forceable
-* Which logs or documents should contain credential hints
-* Which personal accounts bridge into corporate accounts
-* Which credentials appear in misconfigured services
-* Which accounts are red herrings
-* Which credentials lead to major pivot points
-
-The raw credentials come from `EMPLOYEE_CREDENTIALS.json`
-—but only this agent decides which become vulnerabilities.
+* Phone-like container with a **fictional authenticator app**
+* Fictional OTP seed & codes
+* Required for HVT access
+* No real MFA bypass techniques
 
 ---
 
-# **5. Container & Image Builder Agent**
-
-**Inputs:**
-
-* `NETWORK_TOPOLOGY.md`
-* `CHALLENGE_DESIGN.md`
-* `EMPLOYEE_CREDENTIALS.json`
+# 5️⃣ **Container & Image Builder Agent**
 
 **Outputs:**
 
 * `Dockerfiles/`
 * `docker-compose.yml`
-* Service configs
-* System initialization scripts
+* System initialization & configs
 
-This agent builds all infrastructure components:
+Builds everything specified in topology and challenge design:
 
-* Host containers
-* Service configurations
-* User accounts (properly hashed passwords)
-* Internal DNS setups
-* Appropriate port mappings
-* Network bridges
+* Workstations
+* Servers
+* Internal web apps
+* Mobile pseudo-device containers
+* User accounts with hashed passwords
+* Control beacon installation
+* Logging agent installation
 
 ---
 
-# **6. Data & Content Seeder Agent**
-
-**Inputs:**
-
-* Built containers
-* `EMPLOYEE_CREDENTIALS.json`
-* `CHALLENGE_DESIGN.md`
+# 6️⃣ **Data & Content Seeder Agent**
 
 **Outputs:**
 
 * `SEEDING_PLAN.md`
-* `/seed_data/` directory with generated content
+* `/seed_data/` directory
 
-This agent populates each host with realistic internal data:
+Populates hosts with:
 
-### **6.1 Seed Content**
+* Fake emails
+* Documents & PDFs
+* Logs (fictional)
+* Configs
+* Intranet content
+* Password hints
+* Credential artifacts (as defined in challenge design)
 
-* Fake work documents
-* Emails (personal + work inboxes)
-* System logs
-* Configuration files
-* Notes and memos
-* Employee activity artifacts
-* Password hint notes
-* Browser history or saved passwords (if defined in `CHALLENGE_DESIGN.md`)
+### Mobile Device Data (Optional)
 
-### **6.2 Credential Deployment (NEW)**
-
-Credentials may appear as:
-
-* Properly hashed user accounts
-* Database entries
-* Mail server user lists
-* Plaintext notes *only if defined deliberately as a vulnerability*
-* Brute-forceable login prompts
-* Password patterns embedded in documents
-* Authentication logs containing hints
-* Password reuse across personal & work accounts
+* Fake SMS logs
+* Mock mobile authenticator
+* Wallpapers / notes
+* Fictional OTP data
 
 ---
 
-# **7. Cyber Range Compiler / Orchestrator Agent**
+# 7️⃣ **Cyber Range Compiler / Orchestrator Agent**
 
-**Inputs:** All generated artifacts
 **Outputs:**
 
-* Final cyber range manifest
-* Build-ready composition
-* A unified deployable environment
+* Final scenario manifest
+* Build-ready configuration
 
-This agent assembles the entire system:
+Assembles all components into a cohesive cyber range:
 
 * All containers
 * Networks
 * Volumes
-* Configurations
-* Initialization logic
+* Logging stack
+* Control beacon setup
 
 ---
 
-# **8. Scoring Engine Generator Agent**
-
-**Inputs:**
-
-* `ORGANIZATION.md`
-* `CHALLENGE_DESIGN.md`
+# 8️⃣ **Scoring Engine Generator Agent**
 
 **Outputs:**
 
 * `SCORING_LOGIC.md`
-* Scoring service container
-* Scoreboard UI
+* Scoring engine container
+* Web-based scoreboard
 
-Features:
+### King-of-the-Hill Scoring
 
-* Points-per-minute king-of-the-hill scoring
-* Team registration
-* Host control tracking
-* Real-time leaderboard
+Each host runs a **Control Beacon**.
 
-Employee bounty values determine the point assignments.
+A team captures a host by submitting its `control_token` to the scoring server.
+
+### Lockout Mechanism
+
+* Host becomes uncapturable for *e.g., 30 seconds*
+* After lockout, other teams may reclaim
+
+### Scoring
+
+* Hosts give **points per minute**
+* Employee bounty values determine worth
+* Mobile devices count as hosts
 
 ---
 
-# **9. Safety & Validation Agent**
+# 9️⃣ **Centralized Logging Subsystem**
 
-**Input:** Entire scenario
+Every attacker action must be logged.
+
+### Supported Stacks
+
+* ELK (Elasticsearch + Logstash + Kibana)
+* OpenSearch + FluentBit + Grafana
+* Loki + Promtail + Grafana
+
+### Logged Events
+
+* Auth attempts
+* Service access
+* Web requests
+* File events (high-level)
+* Network metadata
+* Score submissions
+* Mobile device interactions
+
+Logs used for post-event debrief.
+
+---
+
+# 🔟 **Safety & Validation Agent**
+
 **Output:** `SAFETY_VALIDATION_REPORT.md`
 
-This agent ensures:
+Ensures:
 
-* All content is fictional
-* No real companies or people appear
-* No harmful code or real-world exploits are generated
-* No external network traffic occurs
-* No credentials resemble real-world data
-* All attacks are contained in a sandbox
+* Everything is fictional
+* No unsafe exploit code
+* No real individuals
+* Offline-only
+* All content is ethical & thematic
 
 ---
 
-# **10. Deployment Coordinator Agent**
+# 1️⃣1️⃣ **Deployment Coordinator Agent**
 
-**Inputs:** Finalized environment
-**Outputs:**
+**Output:**
 
 * Running cyber range
-* System validation
 * `deployment_instructions.md`
 
-Handles:
+Runs:
 
-* Spinning up all containers
-* Pre-CTF validation
-* Connectivity instructions for attackers
-* Reset and management operations
+* Sanity checks
+* Dependency checks
+* Logging connectivity
+* Scoreboard availability
+* Optional reset system
 
 ---
 
-# **11. Optional Admin Dashboard Generator**
+# 1️⃣2️⃣ **Optional Admin Dashboard Generator**
 
-Generates a panel to manage:
+Controls:
 
-* Range health
-* Team scores
+* Host states
+* Scores
 * Logs
 * Restarts
-* Overrides
+* Health checks
 
 ---
 
-# **12. Optional Post-Event Cleanup Agent**
+# 1️⃣3️⃣ **Optional Post-Event Cleanup Agent**
 
-Tears down and wipes the environment clean.
+Tears down containers and wipes the environment.
 
 ---
 
-# **Directory Structure**
+# 🧮 **Resource Constraints**
+
+To support student hardware:
+
+* Max ~25–30 containers
+* No heavy mobile emulators (use pseudo-device containers instead)
+* Lightweight web UIs where possible
+* Low CPU overhead
+
+---
+
+# 📁 **Directory Structure**
 
 ```
 /scenario/
    ORGANIZATION.md
+   EMPLOYEE_CREDENTIALS.json
    NETWORK_TOPOLOGY.md
    CHALLENGE_DESIGN.md
-   EMPLOYEE_CREDENTIALS.json
    SEEDING_PLAN.md
    SCORING_LOGIC.md
    SAFETY_VALIDATION_REPORT.md
@@ -409,40 +394,26 @@ Tears down and wipes the environment clean.
 /runtime/
    scoring_engine/
    dashboard/
+   logging/
    logs/
    deployment_instructions.md
 ```
 
 ---
 
-# **Design Requirements**
+# 🏆 **CTF Gameplay Summary**
 
-### ✔ Fully self-hosted
+Attackers must:
 
-No cloud resources. No external scanning.
+1. Recon the environment
+2. Exploit high-level weaknesses
+3. Pivot internally
+4. Capture hosts via control tokens
+5. Hold hosts for points
+6. Optionally capture mobile pseudo-devices
+7. Defend their captures from other teams
+8. Review logs post-event for learning
 
-### ✔ Fully containerized
-
-All services must run in Docker.
-
-### ✔ Safe & fictional
-
-All credentials, data, and actors must be invented and sandboxed.
-
-### ✔ Regeneratable
-
-A fresh organization, network, and challenge set for each CTF event.
-
-### ✔ Structured outputs
-
-Each agent must produce explicit, machine-readable artifacts.
-
----
-
-# **CTF Gameplay Summary**
-
-Attackers begin externally, identify exposed services, gain foothold, pivot laterally, compromise employees’ devices, and accumulate points based on host value.
-
-Total possible points across all employees = **15,000**.
+Total scenario value = **15,000 points**.
 
 ---
