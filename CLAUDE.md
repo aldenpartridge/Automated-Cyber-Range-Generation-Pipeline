@@ -1,0 +1,570 @@
+# CLAUDE.md - AI Assistant Guide
+
+## Repository Overview
+
+This repository contains the **complete specification** for an automated cyber range generation pipeline designed for university-level CTF (Capture-the-Flag) competitions. The system uses a multi-agent AI architecture to generate fully self-hosted, containerized King-of-the-Hill (KOTH) CTF environments.
+
+**Current State:** Specification/documentation phase - contains detailed architecture but minimal implementation code.
+
+**Primary Document:** `README.md` - comprehensive specification written for downstream LLM agents.
+
+---
+
+## 🎯 Core Purpose & Mission
+
+### What This System Does
+
+- Automatically generates complete CTF scenarios from user requirements
+- Creates fictional organizations with realistic employee data and credentials
+- Builds Docker-based network topologies with 25-30 containers
+- Implements King-of-the-Hill scoring mechanisms
+- Provides centralized logging (ELK/OpenSearch/Loki stacks)
+- Ensures safe, offline-only, high-level vulnerability challenges
+- Supports optional simulated mobile devices for MFA challenges
+
+### Critical Constraints
+
+✅ **MUST**:
+- Everything fictional (no real people, organizations, or credentials)
+- Offline-only execution (no internet connectivity required)
+- High-level vulnerabilities only (weak passwords, reuse, misconfigs)
+- Resource-efficient (~25-30 containers max for student hardware)
+- Full logging of all attacker actions
+- Total scenario value: 15,000 points (employee bounty system)
+
+❌ **MUST NOT**:
+- Use real-world exploit techniques
+- Include unsafe code or actual vulnerabilities
+- Reference real individuals or organizations
+- Require heavy emulators or excessive resources
+- Enable any external network access
+
+---
+
+## 🏗️ Multi-Agent Architecture
+
+The pipeline consists of **13 specialized AI agents** that work sequentially. Each agent produces artifacts consumed by downstream agents.
+
+### Pipeline Stages
+
+| # | Agent | Primary Outputs | Key Responsibilities |
+|---|-------|----------------|---------------------|
+| 1 | **User Input** | Requirements doc | Scenario theme, industry, scale, difficulty |
+| 2 | **Organization Builder** | `ORGANIZATION.md`<br>`EMPLOYEE_CREDENTIALS.json` | Fictional org structure, employee profiles, credentials with patterns |
+| 3 | **Network Architect** | `NETWORK_TOPOLOGY.md` | Network topology, DMZ/LAN zones, Docker layout, mobile devices |
+| 4 | **Vulnerability Designer** | `CHALLENGE_DESIGN.md` | Safe vulnerabilities, attack paths, credential challenges, MFA flows |
+| 5 | **Image Builder** | `Dockerfiles/`<br>`docker-compose.yml` | Container definitions, user accounts, control beacons, logging agents |
+| 6 | **Data Seeder** | `SEEDING_PLAN.md`<br>`/seed_data/` | Fake emails, docs, logs, configs, password hints, mobile data |
+| 7 | **Compiler/Orchestrator** | Final manifest | Assembles all components into cohesive range |
+| 8 | **Scoring Engine** | `SCORING_LOGIC.md`<br>Scoring container | KOTH mechanics, control beacons, lockout system, scoreboard |
+| 9 | **Logging Subsystem** | Logging stack | ELK/OpenSearch/Loki setup, event capture, debrief data |
+| 10 | **Safety Validator** | `SAFETY_VALIDATION_REPORT.md` | Ensures ethical compliance, fictional content, no unsafe code |
+| 11 | **Deployment Coordinator** | `deployment_instructions.md`<br>Running range | Sanity checks, dependency verification, deployment |
+| 12 | **Admin Dashboard** | Dashboard UI | Host control, score monitoring, health checks (optional) |
+| 13 | **Cleanup Agent** | Clean state | Environment teardown (optional) |
+
+---
+
+## 📁 Standard Directory Structure
+
+```
+/
+├── README.md                    # Main specification (DO NOT MODIFY without explicit request)
+├── CLAUDE.md                    # This file - AI assistant guide
+├── scenario/                    # Agent output artifacts (to be created)
+│   ├── ORGANIZATION.md
+│   ├── EMPLOYEE_CREDENTIALS.json
+│   ├── NETWORK_TOPOLOGY.md
+│   ├── CHALLENGE_DESIGN.md
+│   ├── SEEDING_PLAN.md
+│   ├── SCORING_LOGIC.md
+│   └── SAFETY_VALIDATION_REPORT.md
+├── build/                       # Build artifacts (to be created)
+│   ├── Dockerfiles/
+│   ├── service_configs/
+│   ├── seed_data/
+│   ├── docker-compose.yml
+│   └── manifest.json
+└── runtime/                     # Runtime components (to be created)
+    ├── scoring_engine/
+    ├── dashboard/
+    ├── logging/
+    ├── logs/
+    └── deployment_instructions.md
+```
+
+---
+
+## 🔑 Key Terminology
+
+| Term | Definition |
+|------|------------|
+| **Host/Device** | Any containerized workstation, service, or simulated phone |
+| **Container** | Docker container representing part of the organization |
+| **Control Token** | Token proving team control over a host (for KOTH scoring) |
+| **Control Beacon** | Small agent inside each host handling token state and scoring |
+| **Mobile Device** | Pseudo-phone container for fictional MFA flows (not full emulator) |
+| **Logging Subsystem** | Centralized ELK/OpenSearch stack for monitoring all actions |
+| **KOTH** | King-of-the-Hill - scoring model where teams capture and hold hosts |
+| **HVT** | High-Value Target - critical hosts requiring mobile MFA access |
+| **Bounty System** | Point values assigned to employees/hosts (totaling 15,000) |
+
+---
+
+## 💻 Development Workflow
+
+### When Implementing Pipeline Components
+
+1. **Read the README.md specification thoroughly** before implementing any agent
+2. **Understand the pipeline stage dependencies** - each agent consumes outputs from previous agents
+3. **Follow the output artifact naming conventions** exactly as specified
+4. **Validate against safety requirements** before proceeding
+5. **Use lightweight, open-source components** only
+6. **Target resource constraints** (25-30 container max)
+
+### When Adding Code
+
+**File Organization:**
+- Place agent implementations in appropriately named directories
+- Keep agent code modular and well-documented
+- Include configuration examples for each agent
+- Provide clear input/output schemas
+
+**Naming Conventions:**
+- Agent modules: `{stage_number}_{agent_name}/` (e.g., `02_organization_builder/`)
+- Output artifacts: Use EXACT names from specification (e.g., `ORGANIZATION.md`, not `organization.md`)
+- Docker images: `cyber-range-{purpose}` (e.g., `cyber-range-workstation`)
+
+**Documentation:**
+- Each agent should have its own README explaining inputs, outputs, and usage
+- Include example runs and sample outputs
+- Document any external dependencies clearly
+
+### Git Workflow
+
+**Current Branch:** `claude/claude-md-miasbyni225didlu-016eohrs6QgjrUSGq9CfuE1p`
+
+**Branching Strategy:**
+- Development happens on `claude/*` branches
+- Never push directly to main without explicit permission
+- Use clear, descriptive commit messages referencing agent/stage
+
+**Commit Message Format:**
+```
+[Stage N] Brief description
+
+- Detailed change 1
+- Detailed change 2
+```
+
+Example:
+```
+[Stage 2] Implement Organization Builder agent
+
+- Add employee credential generator
+- Implement bounty point distribution
+- Create ORGANIZATION.md template
+```
+
+---
+
+## 🎨 Code Style & Conventions
+
+### Python (Expected Primary Language)
+
+```python
+# Use type hints
+def generate_credentials(employee: dict) -> dict:
+    """Generate fictional credentials for an employee.
+
+    Args:
+        employee: Employee profile dict with name, role, bio
+
+    Returns:
+        Dict containing work/personal usernames, emails, passwords
+    """
+    pass
+
+# Follow PEP 8
+# Use descriptive variable names
+# Include docstrings for all functions
+# Avoid hardcoded values - use config files
+```
+
+### Docker & Configuration
+
+- Use multi-stage builds for efficiency
+- Pin base image versions for reproducibility
+- Use environment variables for configuration
+- Include health checks in Dockerfile
+- Minimize layer count and image size
+
+### JSON/YAML Schemas
+
+```json
+{
+  "employee_credentials": [
+    {
+      "employee_id": "string",
+      "full_name": "string",
+      "work_username": "string",
+      "work_email": "string",
+      "work_password": "string",
+      "personal_username": "string",
+      "personal_email": "string",
+      "personal_password": "string",
+      "password_pattern": "string",
+      "credential_reuse": "boolean",
+      "mfa_enabled": "boolean",
+      "bounty_value": "integer"
+    }
+  ]
+}
+```
+
+---
+
+## 🛡️ Safety & Ethics Guidelines
+
+### Fictional Content Requirements
+
+**Employee Data:**
+- Use obviously fictional names (consider using name generators)
+- No biographical details matching real individuals
+- Avoid patterns that could correlate to real people
+- Include diversity in names and roles
+
+**Organizations:**
+- Clearly fictional company names
+- No mimicking of real company structures
+- Thematic consistency (e.g., "Nebula Tech Corp" for tech theme)
+
+**Credentials:**
+- Patterns should be educational, not realistic attack training
+- Example: `Password123!`, `Summer2024`, `CompanyName!`
+- Avoid teaching actual credential stuffing techniques
+
+### Vulnerability Design Constraints
+
+**ALLOWED (High-Level Concepts):**
+- ✅ Weak password policies
+- ✅ Credential reuse across accounts
+- ✅ Information disclosure in logs/documents
+- ✅ Misconfigured access controls
+- ✅ Unpatched fictional services
+- ✅ SQL injection on internal apps (educational)
+- ✅ XSS on internal apps (educational)
+
+**NOT ALLOWED (Real-World Exploits):**
+- ❌ Actual CVE exploitation code
+- ❌ Zero-day techniques
+- ❌ Advanced persistence mechanisms
+- ❌ Kernel exploits
+- ❌ Hardware attacks
+- ❌ Social engineering beyond password guessing
+- ❌ Real MFA bypass techniques
+
+### Logging Ethics
+
+**Log Everything for Learning:**
+- All authentication attempts (success/failure)
+- Service access patterns
+- File access events
+- Network connections
+- Score submissions
+- Command execution (high-level only)
+
+**Privacy Considerations:**
+- No logging of real personal data
+- Clear data retention policies
+- Post-event log review for educational debrief
+- Aggregate metrics only for public scoreboard
+
+---
+
+## 🏆 Scoring System Implementation
+
+### King-of-the-Hill Mechanics
+
+**Control Beacon (per host):**
+```python
+# Pseudocode for control beacon
+class ControlBeacon:
+    def __init__(self, host_id, control_token, point_value):
+        self.host_id = host_id
+        self.control_token = control_token
+        self.point_value = point_value
+        self.controlling_team = None
+        self.lockout_until = None
+
+    def submit_token(self, team_id, submitted_token):
+        if submitted_token == self.control_token:
+            if not self.is_locked_out():
+                self.controlling_team = team_id
+                self.lockout_until = time.now() + 30  # 30 second lockout
+                return True
+        return False
+```
+
+**Scoring Rules:**
+- Each host has a bounty value (points per minute while controlled)
+- Total bounty across all hosts = 15,000 points
+- Higher-value targets require more steps to reach (pivoting)
+- Mobile devices count as hosts with their own bounty values
+- HVTs (High-Value Targets) require MFA access
+
+**Lockout Mechanism:**
+- After capture: 30-second lockout (configurable)
+- Other teams can reclaim after lockout expires
+- Encourages both offensive and defensive play
+
+---
+
+## 📊 Logging Stack Options
+
+### Option 1: ELK Stack (Elasticsearch + Logstash + Kibana)
+- **Pros:** Full-featured, widely known
+- **Cons:** Resource-intensive
+- **Use when:** Host system has ample resources
+
+### Option 2: OpenSearch + FluentBit + Grafana
+- **Pros:** Lighter than ELK, open-source
+- **Cons:** Less familiar to some students
+- **Use when:** Balancing features and resources
+
+### Option 3: Loki + Promtail + Grafana
+- **Pros:** Lightest option, efficient storage
+- **Cons:** Fewer search capabilities
+- **Use when:** Minimizing resource usage is critical
+
+### Standard Log Format
+
+```json
+{
+  "timestamp": "2024-01-15T10:30:00Z",
+  "event_type": "authentication",
+  "host_id": "workstation-001",
+  "source_ip": "172.20.0.15",
+  "username": "jsmith",
+  "success": false,
+  "details": {
+    "service": "ssh",
+    "port": 22
+  }
+}
+```
+
+---
+
+## 🔍 Testing & Validation
+
+### Pre-Deployment Validation Checklist
+
+- [ ] All containers build successfully
+- [ ] All networks configured correctly
+- [ ] Control beacons operational on all hosts
+- [ ] Scoring engine accessible
+- [ ] Logging pipeline capturing events
+- [ ] All credentials seeded correctly
+- [ ] Attack paths verified (at least one path to each HVT)
+- [ ] Mobile device containers operational (if used)
+- [ ] Scoreboard displays correctly
+- [ ] Admin dashboard functional (if implemented)
+- [ ] Safety validation passed (no unsafe content)
+- [ ] Resource usage within constraints
+- [ ] All services offline-only (no external network)
+
+### Agent Output Validation
+
+Each agent should validate its outputs against schemas:
+- JSON outputs: Use JSON Schema validation
+- Markdown outputs: Ensure all required sections present
+- Docker configs: Use `docker-compose config` to validate
+- Network configs: Verify CIDR ranges don't conflict
+
+---
+
+## 🚀 Deployment Considerations
+
+### Resource Requirements
+
+**Minimum Host System:**
+- 16 GB RAM (32 GB recommended)
+- 4 CPU cores (8 recommended)
+- 50 GB disk space
+- Docker + Docker Compose installed
+- No internet required (all images pre-pulled or built locally)
+
+**Container Resource Limits:**
+- Workstations: 512 MB - 1 GB RAM
+- Servers: 1 GB - 2 GB RAM
+- Logging stack: 4 GB - 8 GB RAM
+- Scoring engine: 512 MB RAM
+- Mobile devices: 256 MB - 512 MB RAM
+
+### Deployment Process
+
+1. **Build Phase:** `docker-compose build` (may take 30-60 min)
+2. **Pre-flight Checks:** Run validation script
+3. **Launch:** `docker-compose up -d`
+4. **Verify:** Check logs, scoreboard, admin dashboard
+5. **Seeding:** Run data seeding scripts (if not baked into images)
+6. **Ready:** Provide access instructions to teams
+
+---
+
+## 🤖 AI Assistant Best Practices
+
+### When Working on This Repository
+
+1. **Always read README.md first** - it's the source of truth
+2. **Maintain specification purity** - don't modify README.md without explicit user request
+3. **Follow the 13-stage pipeline** - understand dependencies before implementing
+4. **Prioritize safety** - validate all generated content against safety guidelines
+5. **Think about resource constraints** - every container counts against the ~30 limit
+6. **Document extensively** - future agents will read your documentation
+7. **Use modular design** - each agent should be independently testable
+8. **Provide examples** - include sample outputs for each agent
+9. **Version artifacts** - use semantic versioning for agent outputs
+10. **Think like an educator** - the end goal is student learning
+
+### Communication Style
+
+- Be precise about which pipeline stage you're working on
+- Reference specific sections of README.md when relevant
+- Explain safety/ethical implications of design decisions
+- Provide rationale for technical choices
+- Flag any deviations from specification for user approval
+
+### Common Pitfalls to Avoid
+
+- ❌ Creating realistic-looking credentials that could be mistaken for real data
+- ❌ Adding complexity beyond the 25-30 container limit
+- ❌ Implementing actual exploit code instead of high-level concepts
+- ❌ Skipping the safety validation stage
+- ❌ Hardcoding values that should be configurable
+- ❌ Creating heavy containers that exceed resource constraints
+- ❌ Forgetting to implement logging for certain event types
+- ❌ Not considering the post-event debrief use case
+
+---
+
+## 📚 Key References
+
+### Within Repository
+- `README.md` - Complete specification (primary reference)
+- `scenario/*.md` - Agent output artifacts (once created)
+- `build/docker-compose.yml` - Infrastructure definition (once created)
+
+### External Documentation
+- Docker & Docker Compose: Container orchestration
+- ELK/OpenSearch/Loki: Logging stack documentation
+- CTF design best practices: Educational security competitions
+- OWASP Top 10: High-level vulnerability concepts (educational context only)
+
+### Fictional Data Generators
+- Faker libraries (Python: `faker`, JS: `faker-js`)
+- Random name generators
+- Lorem ipsum variants for document content
+- Procedural generation for org charts
+
+---
+
+## 🔄 Iteration & Improvement
+
+### Versioning Strategy
+
+**Scenario Versions:**
+- Each generated scenario gets a unique ID and timestamp
+- Scenarios are reproducible from the same seed inputs
+- Version artifacts in `scenario/v{N}/` directories
+
+**Agent Versions:**
+- Agents follow semantic versioning (MAJOR.MINOR.PATCH)
+- Breaking changes to output format = MAJOR bump
+- New features/capabilities = MINOR bump
+- Bug fixes = PATCH bump
+
+### Feedback Loop
+
+After each CTF event:
+1. Collect student feedback
+2. Review logs for unexpected patterns
+3. Adjust agent parameters/prompts
+4. Update difficulty calibration
+5. Refine credential patterns
+6. Improve mobile device challenges
+7. Optimize resource usage
+
+---
+
+## 🎓 Educational Goals
+
+Remember: This system exists to teach cybersecurity concepts safely.
+
+### Learning Objectives
+- Reconnaissance and enumeration
+- Credential-based attacks (high-level)
+- Lateral movement concepts
+- Privilege escalation patterns
+- Log analysis and forensics
+- King-of-the-Hill competitive dynamics
+- Team coordination and defense
+
+### Post-Event Debrief
+- Review logs with students
+- Explain attack paths taken
+- Discuss defensive measures
+- Highlight clever solutions
+- Analyze KOTH dynamics
+- Review scoring progression
+
+---
+
+## 📞 Support & Contribution
+
+### For AI Assistants
+- Consult this CLAUDE.md before starting any task
+- Reference specific sections when asking for clarification
+- Propose changes to conventions if you identify improvements
+- Document any new patterns or best practices discovered
+
+### For Human Developers
+- This file is maintained for AI assistant guidance
+- Treat README.md as immutable specification
+- Changes to architecture require updating both README.md and CLAUDE.md
+- Keep agent implementations aligned with documented conventions
+
+---
+
+## 🏁 Quick Start for AI Assistants
+
+**If asked to implement a specific agent:**
+1. Read this CLAUDE.md (you're doing it now!)
+2. Read README.md sections for that agent
+3. Review input artifacts from previous agents (if applicable)
+4. Create output artifacts following exact naming conventions
+5. Validate against safety guidelines
+6. Test with sample inputs
+7. Document usage and provide examples
+
+**If asked to implement the full pipeline:**
+1. Seek clarification on which agents to prioritize
+2. Start with Organization Builder (Stage 2) - it has no dependencies
+3. Progress sequentially through stages
+4. Validate each stage before proceeding
+5. Run full integration test before declaring complete
+
+**If asked to modify existing code:**
+1. Read existing implementation thoroughly
+2. Understand impact on downstream agents
+3. Maintain backward compatibility with artifacts
+4. Update documentation to reflect changes
+5. Validate changes don't break pipeline flow
+
+---
+
+**Last Updated:** 2024-11-22
+**Repository State:** Specification phase - implementation pending
+**Primary Author:** AI-assisted development
+**Maintained For:** Claude and other AI assistants working on this codebase
